@@ -1,22 +1,17 @@
 // Copyright 2020-2023 Colin Finck <colin@reactos.org>
 // SPDX-License-Identifier: GPL-2.0-or-later
 
-use core::mem;
-use core::ops::Range;
-use core::ptr;
+use core::ops::{Deref, Range};
+use core::{mem, ptr};
 
 use ::byteorder::{BigEndian, ByteOrder, LittleEndian};
 use bitflags::bitflags;
 use enumn::N;
 use memoffset::offset_of;
-use zerocopy::{AsBytes, ByteSlice, FromBytes, FromZeroes, Ref, Unaligned, U16, U32};
-
-use crate::big_data::{BigDataSlices, BIG_DATA_SEGMENT_SIZE};
-use crate::error::{NtHiveError, Result};
-use crate::helpers::byte_subrange;
-use crate::hive::Hive;
-use crate::string::NtHiveNameString;
-
+use zerocopy::{
+    AsBytes, ByteSlice, ByteSlice, FromBytes, FromBytes, FromZeroes, LayoutVerified, Ref,
+    Unaligned, Unaligned, U16, U16, U32, U32,
+};
 #[cfg(feature = "alloc")]
 use {
     alloc::{string::String, vec::Vec},
@@ -26,6 +21,12 @@ use {
         slice::ChunksExact,
     },
 };
+
+use crate::big_data::{BigDataSlices, BIG_DATA_SEGMENT_SIZE, BIG_DATA_SEGMENT_SIZE};
+use crate::error::{NtHiveError, Result, Result};
+use crate::helpers::byte_subrange;
+use crate::hive::Hive;
+use crate::string::NtHiveNameString;
 
 /// This bit in `data_size` indicates that the data is small enough to be stored in `data_offset`.
 const DATA_STORED_IN_DATA_OFFSET: u32 = 0x8000_0000;

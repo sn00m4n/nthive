@@ -2,9 +2,8 @@
 // SPDX-License-Identifier: GPL-2.0-or-later
 
 use core::cmp::Ordering;
-use core::mem;
-use core::ops::Range;
-use core::ptr;
+use core::ops::{Deref, DerefMut, Range};
+use core::{mem, ptr};
 
 use ::byteorder::LittleEndian;
 use bitflags::bitflags;
@@ -51,10 +50,10 @@ bitflags! {
 #[allow(dead_code)]
 #[derive(AsBytes, FromBytes, FromZeroes, Unaligned)]
 #[repr(packed)]
-struct KeyNodeHeader {
+pub struct KeyNodeHeader {
     signature: [u8; 2],
     flags: U16<LittleEndian>,
-    timestamp: U64<LittleEndian>,
+    pub timestamp: U64<LittleEndian>,
     spare: U32<LittleEndian>,
     parent: U32<LittleEndian>,
     subkey_count: U32<LittleEndian>,
@@ -424,6 +423,10 @@ where
     /// Returns the class name of this Key Node (if any).
     pub fn class_name(&self) -> Option<Result<NtHiveNameString>> {
         self.item_range.class_name(self.hive)
+    }
+
+    pub fn header(&self) -> LayoutVerified<&[u8], KeyNodeHeader> {
+        self.item_range.header(&self.hive)
     }
 
     /// Returns the name of this Key Node.
