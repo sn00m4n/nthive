@@ -9,8 +9,7 @@ use bitflags::bitflags;
 use enumn::N;
 use memoffset::offset_of;
 use zerocopy::{
-    AsBytes, ByteSlice, ByteSlice, FromBytes, FromBytes, FromZeroes, LayoutVerified, Ref,
-    Unaligned, Unaligned, U16, U16, U32, U32,
+    AsBytes, ByteSlice, FromBytes, FromZeroes, LayoutVerified, Ref, Unaligned, U16, U32,
 };
 #[cfg(feature = "alloc")]
 use {
