@@ -1,16 +1,14 @@
 // Copyright 2020-2023 Colin Finck <colin@reactos.org>
 // SPDX-License-Identifier: GPL-2.0-or-later
 
-use core::ops::{Deref, Range};
+use core::ops::Range;
 use core::{mem, ptr};
 
 use ::byteorder::{BigEndian, ByteOrder, LittleEndian};
 use bitflags::bitflags;
 use enumn::N;
 use memoffset::offset_of;
-use zerocopy::{
-    AsBytes, ByteSlice, FromBytes, FromZeroes, LayoutVerified, Ref, Unaligned, U16, U32,
-};
+use zerocopy::{AsBytes, ByteSlice, FromBytes, FromZeroes, Ref, Unaligned, U16, U32};
 #[cfg(feature = "alloc")]
 use {
     alloc::{string::String, vec::Vec},
@@ -21,8 +19,8 @@ use {
     },
 };
 
-use crate::big_data::{BigDataSlices, BIG_DATA_SEGMENT_SIZE, BIG_DATA_SEGMENT_SIZE};
-use crate::error::{NtHiveError, Result, Result};
+use crate::big_data::{BigDataSlices, BIG_DATA_SEGMENT_SIZE};
+use crate::error::{NtHiveError, Result};
 use crate::helpers::byte_subrange;
 use crate::hive::Hive;
 use crate::string::NtHiveNameString;

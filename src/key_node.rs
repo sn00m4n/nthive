@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-2.0-or-later
 
 use core::cmp::Ordering;
-use core::ops::{Deref, DerefMut, Range};
+use core::ops::Range;
 use core::{mem, ptr};
 
 use ::byteorder::LittleEndian;
@@ -425,7 +425,7 @@ where
         self.item_range.class_name(self.hive)
     }
 
-    pub fn header(&self) -> LayoutVerified<&[u8], KeyNodeHeader> {
+    pub fn header(&self) -> Ref<&[u8], KeyNodeHeader> {
         self.item_range.header(&self.hive)
     }
 
